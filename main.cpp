@@ -1,8 +1,8 @@
 #include <iostream>
 #include <limits>
 #include <vector>
-#include <valarray>
 #include<iomanip>
+#include <cmath>
 
 bool safe_inp(double* arr[], int len, double err) {
     double n;
