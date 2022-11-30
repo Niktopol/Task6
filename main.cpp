@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <vector>
-#include<iomanip>
+#include <iomanip>
 #include <cmath>
 
 bool safe_inp(double* arr[], int len, double err) {
