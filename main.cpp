@@ -2,6 +2,7 @@
 #include <limits>
 #include <vector>
 #include <valarray>
+#include<iomanip>
 
 bool safe_inp(double* arr[], int len, double err) {
     double n;
@@ -129,6 +130,103 @@ bool polinum29(int num) {
     }
     return rever(bg) == end;
 }
+int fndminmx(std::vector<int> a, bool fl){
+    int m = a[0];
+    if (fl){
+        for (int i = 0; i < a.size(); i++){
+            m = (a[i] < m) ? a[i] : m;
+        }
+    }else{
+        for (int i = 0; i < a.size(); i++){
+            m = (a[i] > m) ? a[i] : m;
+        }
+    }
+    return m;
+}
+void sort48(int n){
+    std::vector<int> arr;
+    std::vector<int> b;
+    int a;
+    std::cout << "Введите "<< n << " элементов" << std::endl;
+    for (int i = 0; i < n; i++){
+        safe_inp(&a, 0);
+        arr.push_back(a);
+    }
+    b = arr;
+    std::cout << fndminmx(b, true) << fndminmx(b, false);
+    //struct
+}
+void printMx(std::vector<std::vector<int>> a, int ln){
+    int ab = ln+2;
+    for (int i = 0; i < a.size(); i++){
+        for (int j = 0; j < a.size(); j++){
+            std::cout <<  std::setw(ab) << a.at(i).at(j);
+        }
+        std::cout << std::endl;
+    }
+}
+void rotmx(std::vector<std::vector<int>> a, int rot, int mxel){
+    std::vector<std::vector<int>> b;
+    int sz = a.size();
+    b.resize(sz);
+    for (int i = 0; i < sz; i++){
+        b.at(i).resize(sz);
+    }
+    if (rot < 0){
+        rot = 4 + rot;
+    }
+    for (int i = 0; i < rot; i ++){
+        for (int j = 0; j < sz; j++){
+            for (int g = 0; g < sz; g++){
+                b[g][sz-1-j] = a[j][g];
+            }
+        }
+        a = b;
+    }
+    printMx(a, mxel);
+}
+void rotate62(int m){
+    std::vector <std::vector <int>> arr;
+    arr.resize(m);
+    int a;
+    std::cout << "Введите "<< m*m << " элементов" << std::endl;
+    int mxel;
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < m; j++){
+            safe_inp(&a, 0);
+            int ln = len(a);
+            mxel = (mxel < ln) ? ln : mxel;
+            arr.at(i).push_back(a);
+        }
+    }
+    printMx(arr, mxel);
+    std::cout << "Введите количество поворотов на 90 и их направление (-n = повернуть против часовой n раз, n = повернуть по часовой n раз)" << std::endl;
+    if (safe_inp(&a, -1)){
+        rotmx(arr, a%4, mxel);
+    }
+    else{
+        std::cout << "Неверный ввод" << std::endl;
+    }
+}
+std::string makestr(int a, int ln){
+    std::string dct = "0123456789";
+    std::string out = "";
+    for (int i = 0; i < ln; i++){
+        out += dct[a];
+    }
+    return out;
+}
+void rec79(int a, int b, int ln, int dir){
+    if (b == 0){
+        return;
+    }
+    int x = ln + (a*a-ln)/2;
+    std::cout << std::setw(x) << makestr(b, ln) << std::endl;
+    if (b == a){
+        dir = -dir;
+    }
+    rec79(a,b+dir,ln-(a*dir), dir);
+}
 int main() {
     setlocale(0, "");
     int a = 0, b = 0;
@@ -172,10 +270,31 @@ int main() {
                 }
                 break;
             case 4:
+                std::cout << "Введите длину массива в отрезке [1, 100]" << std::endl;
+                if (safe_inp(&a, -1) and a > 0 and a <= 100) {
+                    sort48(a);
+                }
+                else {
+                    std::cout << "Неверный ввод" << std::endl;
+                }
                 break;
             case 5:
+                std::cout << "Введите порядок матрицы" << std::endl;
+                if (safe_inp(&a, -1) and a > 0) {
+                    rotate62(a);
+                }
+                else {
+                    std::cout << "Неверный ввод" << std::endl;
+                }
                 break;
             case 6:
+                std::cout << "Введите чётное число из отрезка [2,8]" << std::endl;
+                if (safe_inp(&a, -1) and a > 0 and a%2 == 0 and a < 10) {
+                    rec79(a,1, a*a, 1);
+                }
+                else {
+                    std::cout << "Неверный ввод" << std::endl;
+                }
                 break;
             default:
                 std::cout << "Неверный ввод" << std::endl;
