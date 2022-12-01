@@ -146,15 +146,40 @@ int fndminmx(std::vector<int> a, bool fl){
 void sort48(int n){
     std::vector<int> arr;
     std::vector<int> b;
-    int a;
+    int a, c, mx;
     std::cout << "Введите "<< n << " элементов" << std::endl;
     for (int i = 0; i < n; i++){
         safe_inp(&a, 0);
         arr.push_back(a);
     }
     b = arr;
-    std::cout << fndminmx(b, true) << fndminmx(b, false);
-    //struct
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n-1; j++){
+            if (b[j+1] < b[j]){
+                c = b[j+1];
+                b[j+1] = b[j];
+                b[j] = c;
+            }
+        }
+    }
+    mx = fndminmx(b, false)+1;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            if (b[i] == arr[j]){
+                b[i] = j;
+                arr[j] = mx;
+            }
+        }
+    }
+    std::cout << "Возрастающая последовательность:" << std::endl;
+    for (int i = 0; i < n; i++){
+        std::cout << b[i] << " ";
+    }
+    std::cout << std::endl << "Убывающая последовательность:" << std::endl;
+    for (int i = n-1; i >= 0; i--){
+        std::cout << b[i] << " ";
+    }
+    std::cout << std::endl;
 }
 void printMx(std::vector<std::vector<int>> a, int ln){
     int ab = ln+2;
